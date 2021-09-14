@@ -25,7 +25,7 @@ use <NopSCADlib/utils/gears.scad>
 
 /* [Gear Settings] */
 // Gear Teeth
-gearTeeth = 40; // [7 : 1 : 99]
+gearTeeth = 32; // [7 : 1 : 99]
 //  Modulus
 modulus = 1; // [0.1 : 0.1 : 5.0]
 // Pressure angle
@@ -41,7 +41,7 @@ keydepth = 1.73;
 
 
 /* [Inner cylinder outerdiameter]*/
-innercylOD = 32;
+innercylOD = 28;
 innercylheight = 2;
 
 
