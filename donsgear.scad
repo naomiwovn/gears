@@ -25,9 +25,9 @@ use <NopSCADlib/utils/gears.scad>
 
 /* [Gear Settings] */
 // Gear Teeth
-z1 = 32; // [7 : 1 : 99]
+gearTeeth = 40; // [7 : 1 : 99]
 //  Modulus
-m = 1; // [0.1 : 0.1 : 5.0]
+modulus = 1; // [0.1 : 0.1 : 5.0]
 // Pressure angle
 pa = 25; // [14.5, 20, 22.5, 25]
 // Gear Height
@@ -45,13 +45,13 @@ innercylOD = 32;
 innercylheight = 2;
 
 
-module Gear(gearTeeth=32, modulus=1) {
+module Gear(gearTeeth=gearTeeth, modulus=modulus) {
     color(pp1_colour)
         rotate(-$t * 360)
-            linear_extrude(gearheight, center = true, convexity = z1)
+            linear_extrude(gearheight, center = true, convexity = gearTeeth)
                 difference() {
                     involute_gear_profile(modulus, gearTeeth, pa);
-                    circle(r = m * z1 / 10);
+                    circle(r = modulus * gearTeeth / 10);
                 }
  }
 
@@ -63,22 +63,26 @@ module KeyHole(diam,key){
 }
 
 
-// Put pices together 
+// // Put pices together Double Gear 
+// difference(){
+//     union(){
+//         Gear(gearTeeth=64,modulus=0.9375);
+//         translate([0,0,gearheight/2+innercylheight/2])
+//             Gear();
+//     }
+//     KeyHole(keydiam,keylen);
+// }
+
+
+// Gear with cylinder spacer
 difference(){
     union(){
-        Gear(gearTeeth=64,modulus=0.9375);
-        translate([0,0,gearheight/2+innercylheight/2])
-            Gear();
-    }
-    KeyHole(keydiam,keylen);
+       Gear();
+       translate([0,0,gearheight/2])
+            cylinder(d=innercylOD, h = innercylheight);
+   }
+   KeyHole(keydiam,keylen);
 }
-
-//difference(){
-//    union(){
-//        Gear();
-//    }
-//    KeyHole(keydiam,keylen);
-//}
 
 
 
